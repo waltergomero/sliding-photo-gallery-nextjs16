@@ -29,6 +29,6 @@
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
     "**/*.mts"
-  ],
+, "components/client-wrapper/EChartClient.tsx2"  ],
   "exclude": ["node_modules"]
 }
