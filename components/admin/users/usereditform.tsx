@@ -45,17 +45,17 @@ const UserEditForm = ({ user }: UserEditFormProps) => {
     try {
       const response = await updateUser(formData);
 
-      if (response.error === "validation") {
-        setState({ loading: false, zodErrors: response.zodErrors });
+      if ('error' in response && response.error === "validation") {
+        setState({ loading: false, zodErrors: response.zodErrors || null });
         toast.error(response.message);
-      } else if (response.error === "already_exists") {
+      } else if ('error' in response && response.error === "already_exists") {
         toast.error("Failed adding a user: " + response.message);
-      } else if (response.success === false) {
+      } else if ('success' in response && response.success === false) {
         toast.error("Failed updating user: " + response.message);
-      } else if (response.success) {
+      } else if ('success' in response && response.success) {
         toast.success("User updated successfully");
         router.push('/admin/users');
-      } else {
+      } else if ('error' in response) {
         toast.error("Errors: " + response.error);
       }
     } catch {

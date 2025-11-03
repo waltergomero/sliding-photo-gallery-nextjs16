@@ -14,11 +14,11 @@ import {
   Alert,
   Spinner
 } from 'react-bootstrap';
-import { TbSearch, TbSortAscending, TbSortDescending, TbSwitch } from 'react-icons/tb';
-import { StatusTableProps, Status } from '@/types/status';
-import { EditStatusBtn, DeleteStatusBtn, CreateStatusBtn } from './buttons';
+import { TbSearch, TbSortAscending, TbSortDescending, TbCategory } from 'react-icons/tb';
+import { CategoryTableProps, Category } from '@/types/category';
+import { EditCategoryBtn, DeleteCategoryBtn, CreateCategoryBtn } from './buttons';
 
-type SortField = keyof Pick<Status, 'status_name' | 'typeid' |'createdAt'>;
+type SortField = keyof Pick<Category, 'category_name' | 'createdAt'>;
 type SortDirection = 'asc' | 'desc';
 
 interface SortConfig {
@@ -26,7 +26,7 @@ interface SortConfig {
   direction: SortDirection;
 }
 
-const StatusTable = ({ status }: StatusTableProps) => {
+const CategoryTable = ({ categories }: CategoryTableProps) => {
   const [search, setSearch] = useState('');
   const [sortConfig, setSortConfig] = useState<SortConfig>({
     field: null,
@@ -34,18 +34,18 @@ const StatusTable = ({ status }: StatusTableProps) => {
   });
 
   // Enhanced filtering and sorting
-  const processedStatus = useMemo(() => {
-    let result = [...status.data];
+  const processedCategories = useMemo(() => {
+    let result = [...categories.data];
 
-    // Filter users based on search query (case-insensitive)
+    // Filter categories based on search query (case-insensitive)
     if (search.trim()) {
       const searchLower = search.toLowerCase().trim();
-      result = result.filter(status =>
-        status.status_name.toLowerCase().includes(searchLower)
+      result = result.filter(category =>
+        category.category_name.toLowerCase().includes(searchLower)
       );
     }
 
-    // Sort status
+    // Sort categories
     if (sortConfig.field) {
       result.sort((a, b) => {
         const aValue = a[sortConfig.field!];
@@ -60,7 +60,7 @@ const StatusTable = ({ status }: StatusTableProps) => {
     }
 
     return result;
-  }, [status.data, search, sortConfig]);
+  }, [categories.data, search, sortConfig]);
 
   const handleSort = (field: SortField) => {
     setSortConfig(prev => ({
@@ -101,11 +101,11 @@ const StatusTable = ({ status }: StatusTableProps) => {
     <Card>
       <CardHeader className="d-flex justify-content-between align-items-center">
         <div className="d-flex align-items-center gap-2">
-          <TbSwitch size={20} />
-          <CardTitle className="mb-0">Status Management</CardTitle>
-          <Badge bg="primary" className="ms-2">{status.data.length} total</Badge>
+          <TbCategory size={20} />
+          <CardTitle className="mb-0">Category Management</CardTitle>
+          <Badge bg="primary" className="ms-2">{categories.data.length} total</Badge>
         </div>
-        <CreateStatusBtn />
+        <CreateCategoryBtn />
       </CardHeader>
 
       <CardBody>
@@ -117,30 +117,30 @@ const StatusTable = ({ status }: StatusTableProps) => {
                 <TbSearch size={16} />
               </InputGroup.Text>
               <FormControl
-                placeholder="Search by status name, type ID, or created date..."
+                placeholder="Search by category name or created date..."
                 value={search}
                 onChange={e => setSearch(e.target.value)}
-                aria-label="Search status"
+                aria-label="Search category"
               />
             </InputGroup>
           </Col>
           <Col md={6} className="d-flex justify-content-end align-items-center">
             {search.trim() && (
               <small className="text-muted">
-                Showing {processedStatus.length} of {status.data.length} status
+                Showing {processedCategories.length} of {categories.data.length} categories
               </small>
             )}
           </Col>
         </Row>
 
         {/* Table */}
-        {processedStatus.length === 0 ? (
+        {processedCategories.length === 0 ? (
           <Alert variant="info" className="text-center">
-            <TbSwitch size={24} className="mb-2" />
+            <TbCategory size={24} className="mb-2" />
             <div>
               {search.trim() 
-                ? `No status found matching "${search}"`
-                : 'No status available'
+                ? `No category found matching "${search}"`
+                : 'No category available'
               }
             </div>
           </Alert>
@@ -153,18 +153,17 @@ const StatusTable = ({ status }: StatusTableProps) => {
                   <th 
                     scope="col" 
                     className="text-uppercase fs-xxs sortable-header"
-                    onClick={() => handleSort('status_name')}
+                    onClick={() => handleSort('category_name')}
                     style={{ cursor: 'pointer' }}
                   >
-                    Status Name {getSortIcon('status_name')}
+                    Category Name {getSortIcon('category_name')}
                   </th>
                   <th 
                     scope="col" 
                     className="text-uppercase fs-xxs sortable-header"
-                    onClick={() => handleSort('typeid')}
                     style={{ cursor: 'pointer' }}
                   >
-                    Type ID {getSortIcon('typeid')}
+                    Description
                   </th>
                   <th scope="col" className="text-uppercase fs-xxs">Is Active?</th>
                   <th 
@@ -179,27 +178,27 @@ const StatusTable = ({ status }: StatusTableProps) => {
                 </tr>
               </thead>
               <tbody>
-                {processedStatus.map((status) => (
-                  <tr key={status.id}>
+                {processedCategories.map((category) => (
+                  <tr key={category.id}>
                     <td>
-                      <code className="text-muted small">{status.id.slice(0, 8)}...</code>
+                      <code className="text-muted small">{category.id.slice(0, 8)}...</code>
                     </td>
                     <td>
-                      <strong>{status.status_name}</strong>
+                      <strong>{category.category_name}</strong>
                     </td>
                     <td>
-                        <strong>{status.typeid}</strong>
+                        <strong>{category.description}</strong>
                     </td>
                     <td>
-                      {renderStatusBadge(status.isactive ?? false, 'Active')}
+                      {renderStatusBadge(category.isactive ?? false, 'Active')}
                     </td>
                     <td>
-                      <strong>{formatDate(status.createdAt)}</strong>
+                      <strong>{formatDate(category.createdAt)}</strong>
                     </td>
                     <td>
                       <div className="d-flex gap-1 justify-content-center">
-                        <EditStatusBtn id={status.id} />
-                        <DeleteStatusBtn id={status.id} />
+                        <EditCategoryBtn id={category.id} />
+                        <DeleteCategoryBtn id={category.id} />
                       </div>
                     </td>
                   </tr>
@@ -213,4 +212,4 @@ const StatusTable = ({ status }: StatusTableProps) => {
   );
 }
 
-export default StatusTable
+export default CategoryTable

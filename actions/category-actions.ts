@@ -5,8 +5,8 @@
 'use server';
 
 import { 
-  createStatusSchema, 
-  updateStatusSchema, 
+  createCategorySchema, 
+  updateCategorySchema, 
 } from '../schemas/validation-schemas';
 import { unstable_noStore as noStore } from 'next/cache';
 import { isRedirectError } from 'next/dist/client/components/redirect-error';
@@ -30,12 +30,12 @@ interface ValidationResult {
   message: string;
 }
 
-interface UsersResult {
+interface CategoryResult {
   data: any[];
   totalPages: number;
 }
 
-interface GetStatusParams {
+interface GetCategoryParams {
   limit?: number;
   page: number;
   query?: string;
@@ -70,19 +70,19 @@ function formatValidationError(error: z.ZodError): ValidationResult {
 }
 
 /**
- * Get all statuses with pagination and filtering
+ * Get all categories with pagination and filtering
  */
-export async function getAllStatus({ 
+export async function getAllCategories({ 
   limit = DEFAULT_PAGE_LIMIT, 
   page, 
   query 
-}: GetStatusParams): Promise<UsersResult> {
+}: GetCategoryParams): Promise<CategoryResult> {
   try {
     const queryFilter = query && query !== 'all'
       ? {
           OR: [
             {
-              status_name: {
+              category_name: {
                 contains: query,
                 mode: 'insensitive' as const,
               },
@@ -92,21 +92,21 @@ export async function getAllStatus({
       : {};
 
     const [data, dataCount] = await Promise.all([
-      prisma.status.findMany({
+      prisma.category.findMany({
         where: queryFilter,
         orderBy: { createdAt: 'desc' },
         take: limit,
         skip: (page - 1) * limit,
         select: {
           id: true,
-          status_name: true,
-          typeid: true,
+          category_name: true,
+          description: true,
           isactive: true,
           createdAt: true,
           updatedAt: true,
         },
       }),
-      prisma.status.count({ where: queryFilter }),
+      prisma.category.count({ where: queryFilter }),
     ]);
 
     return {
@@ -114,22 +114,21 @@ export async function getAllStatus({
       totalPages: Math.ceil(dataCount / limit),
     };
   } catch (error) {
-    console.error('Error fetching statuses:', error);
-    throw new Error('Failed to fetch statuses');
+    console.error('Error fetching categories:', error);
+    throw new Error('Failed to fetch categories');
   }
 }
 
 /**
- * Get status by ID
+ * Get category by ID
  */
-export async function getStatusById(statusId: string) {
+export async function fetchCategoryById(categoryId: string) {
   try {
-    const status = await prisma.status.findUnique({
-      where: { id: statusId },
+    const category = await prisma.category.findUnique({
+      where: { id: categoryId },
       select: {
         id: true,
-        status_name: true,
-        typeid: true,
+        category_name: true,
         description: true,
         isactive: true,
         createdAt: true,
@@ -137,21 +136,21 @@ export async function getStatusById(statusId: string) {
       },
     });
 
-    if (!status) {
-      throw new Error('Status not found');
+    if (!category) {
+      throw new Error('Category not found');
     }
 
-    return status;
+    return category;
   } catch (error) {
-    console.error('Error fetching status:', error);
+    console.error('Error fetching category:', error);
     throw error;
   }
 }
 
 /**
- * Delete status by ID
+ * Delete category by ID
  */
-export async function deleteStatus(id: string): Promise<void> {
+export async function deleteCategory(id: string): Promise<void> {
   noStore();
 
   try {
@@ -159,130 +158,128 @@ export async function deleteStatus(id: string): Promise<void> {
       where: { id } 
     });
     
-    revalidatePath('/admin/status');
-    redirect('/admin/status');
+    revalidatePath('/admin/categories');
+    redirect('/admin/categories');
   } catch (error) {
-    console.error('Error deleting status:', error);
-    throw new Error('Failed to delete status');
+    console.error('Error deleting category:', error);
+    throw new Error('Failed to delete category');
   }
 }
 
 /**
- * Create new status (admin function)
+ * Create new category (admin function)
  */
-export async function createNewStatus(
+export async function createNewCategory(
   formData: FormData
 ): Promise<ActionResult | ValidationResult> {
   try {
     const formFields = {
-      status_name: formData.get('status_name') as string,
+      category_name: formData.get('category_name') as string,
       typeid: parseInt(formData.get('typeid') as string, 10),
     };
 
-    console.log("Form Fields in createNewStatus:", formFields);
+    console.log("Form Fields in createNewCategory:", formFields);
     // Validate form data
-    const validatedFields = createStatusSchema.safeParse(formFields);
-    console.log("Validated Fields in createNewStatus:", validatedFields);
+    const validatedFields = createCategorySchema.safeParse(formFields);
+    console.log("Validated Fields in createNewCategory:", validatedFields);
     if (!validatedFields.success) {
       return formatValidationError(validatedFields.error);
     }
 
-    const { status_name, typeid } = validatedFields.data;
+    const { category_name, } = validatedFields.data;
 
-    // Check if status already exists
-    const existingStatus = await prisma.status.findFirst({
-      where: { status_name: status_name,
-               typeid: typeid },
-      select: { id: true },
+    // Check if category already exists
+    const existingCategory = await prisma.category.findFirst({
+      where: { category_name: category_name,
+},
+      select: { id: true, category_name: true},
     });
 
-    if (existingStatus) {
+    if (existingCategory) {
       return {
         success: false,
-        message: `Status with name "${status_name}" already exists`,
+        message: `Category with name "${category_name}" already exists`,
       };
     }
 
-    const newStatus = await prisma.status.create({
+    const newCategory = await prisma.category.create({
       data: {
-        status_name,
-        typeid,
+        category_name,
         isactive: true,
       },
       select: {
         id: true,
-        status_name: true,
-        typeid: true,
+        category_name: true,
+        description: true,
+        isactive: true,
+        createdAt: true,
+        updatedAt: true,
       },
     });
 
     return { 
       success: true, 
-      message: 'Status created successfully',
-      data: newStatus,
+      message: 'Category created successfully',
+      data: newCategory,
     };
   } catch (error) {
-    return handleActionError(error, 'Failed to create status');
+    return handleActionError(error, 'Failed to create category');
   }
 }
 
 /**
- * Update existing status
+ * Update existing category
  */
-export async function updateStatus(
+export async function updateCategory(
   formData: FormData
 ): Promise<ActionResult | ValidationResult> {
   try {
     const formFields = {
-      statusid: formData.get("statusid") as string,
-      status_name: formData.get("status_name") as string,
-      typeid: parseInt(formData.get('typeid') as string, 10),
+      categoryid: formData.get("categoryid") as string,
+      category_name: formData.get("category_name") as string,
       description: formData.get("description") as string,
       isactive: Boolean(formData.get("isactive")),
     };
 
     // Validate form data
-    const validatedFields = updateStatusSchema.safeParse(formFields);
+    const validatedFields = updateCategorySchema.safeParse(formFields);
     if (!validatedFields.success) {
       return formatValidationError(validatedFields.error);
     }
 
-    const { status_name, isactive, typeid } = validatedFields.data;
+    const { category_name, isactive, description } = validatedFields.data;
 
-    // Check if status exists
-    const existingStatus = await prisma.status.findUnique({ 
-      where: { id: formFields.statusid, typeid: typeid },
-      select: { id: true, status_name: true, typeid: true, isactive: true },
+    // Check if category exists
+    const existingCategory = await prisma.category.findUnique({
+      where: { id: formFields.categoryid },
+      select: { id: true, category_name: true, isactive: true, description: true },
     });
 
-    if (existingStatus) {
-      if (existingStatus.id != formFields.statusid) {
+    if (existingCategory) {
+      if (existingCategory.id != formFields.categoryid) {
         return  {error: "already_exists",
-                 message: `Status "${status_name}" with type ID "${typeid}" already exists`}; 
+                 message: `Category "${category_name}" already exists`}; 
       }
     }
 
     // Prepare update data
     const updateData: {
-      status_name: string;
-      typeid: number;
+      category_name: string;
       isactive: boolean;
       description?: string;
     } = {
-      status_name,
-      typeid,
+      category_name,
       isactive: isactive ?? true,
       description: formFields.description,
     };
 
-    // Update status
-    const updateStatus = await prisma.status.update({
-      where: { id: formFields.statusid },
+    // Update category
+    const updateCategory = await prisma.category.update({
+      where: { id: formFields.categoryid },
       data: updateData,
       select: {
         id: true,
-        status_name: true,
-        typeid: true,
+        category_name: true,
         isactive: true,
         description: true,
       },
@@ -290,11 +287,11 @@ export async function updateStatus(
 
     return {
       success: true,
-      message: 'Status updated successfully',
-      data: updateStatus,
+      message: 'Category updated successfully',
+      data: updateCategory,
     };
   } catch (error) {
-    return handleActionError(error, 'Failed to update status');
+    return handleActionError(error, 'Failed to update category');
   }
 }
 

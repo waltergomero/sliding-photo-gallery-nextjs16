@@ -1,16 +1,18 @@
-import StatusCreateForm from '@/components/admin/status/statuscreateform'
+import CategoryCreateForm from '@/components/admin/categories/categorycreateform'
 import PageBreadcrumb from '@/components/PageBreadcrumb'
 import { Col, Container, Row } from 'react-bootstrap';
 
-const CreateStatusPage = () => {
+
+const CreateCategoryPage = async () => {
+
   return (
     <>
       <Container fluid>
-        <PageBreadcrumb title="Create New Status Page" subtitle="Status" />
+        <PageBreadcrumb title="Create New Category Page" subtitle="Category" />
         <Container>
            <Row className="justify-content-center">
             <Col xl={10}>
-              <StatusCreateForm />
+              <CategoryCreateForm />
             </Col>
           </Row>
         </Container>
@@ -19,4 +21,4 @@ const CreateStatusPage = () => {
   )
 }
 
-export default CreateStatusPage
+export default CreateCategoryPage

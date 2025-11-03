@@ -14,9 +14,9 @@ interface EditStatusPageProps {
 const EditStatusPage = async (props: EditStatusPageProps) => {
 
     const { id } = await props.params;
-    const statusResponse = await getStatusById(id);
+    const status = await getStatusById(id);
 
-    if (!statusResponse?.success || !statusResponse.data) notFound();
+    if (!status) notFound();
 
   return (
     <>
@@ -25,14 +25,8 @@ const EditStatusPage = async (props: EditStatusPageProps) => {
 
         <Container>
            <Row className="justify-content-center">
-            <Col xl={8}>
-              <StatusEditForm status={{
-                id: statusResponse.data.id,
-                status_name: statusResponse.data.status_name,
-                typeid: statusResponse.data.typeid,
-                description: statusResponse.data.description || '',
-                isactive: statusResponse.data.isactive ?? false
-              }} />
+            <Col xl={10}>
+              <StatusEditForm status={status} />
             </Col>
           </Row>
         </Container>

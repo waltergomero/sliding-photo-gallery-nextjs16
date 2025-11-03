@@ -31,9 +31,22 @@ export const updateUserFormSchema = z.object({
     isadmin: z.boolean().optional(),
   });
 
-  export const categorySchema = z.object({
+export const categorySchema = z.object({
   category_name: z.string().min(2, { message: 'Category name must be at least 2 characters long' }),
 });
+
+export const createCategorySchema = z.object({
+  category_name: z.string().min(2, { message: 'Category name must be at least 2 characters long' }),
+  description: z.string().max(500, { message: 'Description must not exceed 500 characters' }).optional(),
+});
+
+
+export const updateCategorySchema = z.object({
+  category_name: z.string().min(2, { message: 'Category name must be at least 2 characters long' }),
+  description: z.string().max(500, { message: 'Description must not exceed 500 characters' }).optional(),
+  isactive: z.boolean().optional().default(true),
+});
+
 
 export const statusSchema = z.object({
   status_name: z.string().min(2, { message: 'Status name must be at least 2 characters long' }).max(100, { message: 'Status name must not exceed 100 characters' }),
@@ -47,9 +60,8 @@ export const createStatusSchema = z.object({
 });
 
 export const updateStatusSchema = z.object({
-  id: z.string().uuid({ message: 'Invalid status ID format' }),
   status_name: z.string().min(2, { message: 'Status name must be at least 2 characters long' }).max(100, { message: 'Status name must not exceed 100 characters' }),
   description: z.string().max(500, { message: 'Description must not exceed 500 characters' }).optional(),
-  typeid: z.number().min(1, { message: 'Type ID must be a positive number' }),
+  typeid: z.number().min(0, { message: 'Type ID must be a positive number' }),
   isactive: z.boolean().optional(),
 });

@@ -178,7 +178,7 @@ const UsersTable = ({ users }: UserTableProps) => {
                     Email {getSortIcon('email')}
                   </th>
                   <th scope="col" className="text-uppercase fs-xxs">Admin</th>
-                  <th scope="col" className="text-uppercase fs-xxs">Status</th>
+                  <th scope="col" className="text-uppercase fs-xxs">Is Active</th>
                   <th 
                     scope="col" 
                     className="text-uppercase fs-xxs sortable-header"
@@ -194,7 +194,7 @@ const UsersTable = ({ users }: UserTableProps) => {
                 {processedUsers.map((user) => (
                   <tr key={user.id}>
                     <td>
-                      <code className="text-muted small">{user.id.slice(0, 8)}...</code>
+                      <code className="text-muted">{user.id.slice(0, 8)}...</code>
                     </td>
                     <td>
                       <strong>{user.last_name}</strong>
@@ -204,13 +204,13 @@ const UsersTable = ({ users }: UserTableProps) => {
                         {user.email}
                     </td>
                     <td>
-                      {renderStatusBadge(user.isadmin, 'Admin')}
+                      {renderStatusBadge(user.isadmin ?? false, 'Admin')}
                     </td>
                     <td>
-                      {renderStatusBadge(user.isactive, 'Active')}
+                      {renderStatusBadge(user.isactive ?? false, 'Active')}
                     </td>
                     <td>
-                      <small className="text-muted">{formatDate(user.createdAt)}</small>
+                      <strong>{formatDate(user.createdAt)}</strong>
                     </td>
                     <td>
                       <div className="d-flex gap-1 justify-content-center">
