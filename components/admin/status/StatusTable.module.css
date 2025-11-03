@@ -1,0 +1,121 @@
+.statusTable {
+  --bs-table-hover-bg: rgba(0, 0, 0, 0.02);
+}
+
+.statusTable .sortable-header {
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.statusTable .sortable-header:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.statusTable .table-dark .sortable-header:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+.statusTableCard {
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  border: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.statusTableCard .card-header {
+  background-color: #f8f9fa;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.statusIdCell {
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  font-size: 0.75rem;
+  color: #6c757d;
+}
+
+.statusNameCell {
+  font-weight: 600;
+  color: #212529;
+}
+
+.statusDescriptionCell {
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.statusBadge {
+  font-size: 0.75rem;
+  padding: 0.25rem 0.5rem;
+}
+
+.actionButtons {
+  display: flex;
+  gap: 0.25rem;
+  align-items: center;
+}
+
+.emptyState {
+  padding: 3rem 2rem;
+  text-align: center;
+  color: #6c757d;
+}
+
+.filterControls {
+  margin-bottom: 1rem;
+}
+
+.searchInput {
+  border-radius: 0.375rem;
+}
+
+.searchInput:focus {
+  border-color: #0d6efd;
+  box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+}
+
+/* Responsive improvements */
+@media (max-width: 768px) {
+  .statusTableCard .card-header {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .statusTableCard .card-header .btn {
+    width: 100%;
+  }
+  
+  .filterControls {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .statusDescriptionCell {
+    max-width: 120px;
+  }
+  
+  .actionButtons {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .statusTableCard {
+    background-color: #212529;
+    border-color: #495057;
+  }
+  
+  .statusTableCard .card-header {
+    background-color: #343a40;
+    border-bottom-color: #495057;
+  }
+  
+  .statusNameCell {
+    color: #f8f9fa;
+  }
+  
+  .statusIdCell {
+    color: #adb5bd;
+  }
+}

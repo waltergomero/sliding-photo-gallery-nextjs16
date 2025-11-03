@@ -45,3 +45,46 @@
 .table tr>td .dropdown {
     position: static;
 }
+
+// Sortable table headers
+.sortable-header {
+    user-select: none;
+    transition: background-color 0.15s ease-in-out;
+    
+    &:hover {
+        background-color: rgba(255, 255, 255, 0.1) !important;
+    }
+    
+    &:active {
+        transform: translateY(1px);
+    }
+}
+
+// Badge dot enhancement
+.badge-dot {
+    display: inline-block;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.6; }
+    100% { opacity: 1; }
+}
+
+// Enhanced table responsiveness
+@media (max-width: 768px) {
+    .table-custom {
+        font-size: 0.85rem;
+        
+        th, td {
+            padding: 0.5rem 0.25rem !important;
+        }
+        
+        .btn-icon {
+            width: 28px;
+            height: 28px;
+        }
+    }
+}

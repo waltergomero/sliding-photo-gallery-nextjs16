@@ -1,3 +1,5 @@
+'use client'
+
 import Link from 'next/link'
 import { BreadcrumbItem } from 'react-bootstrap'
 import { TbChevronRight } from 'react-icons/tb'
