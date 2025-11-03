@@ -88,6 +88,7 @@ export const menuItems: MenuItemType[] = [
     icon: TbLayoutDashboard,
     url: '/admin/dashboard',
   },
+  { key: 'gallery', label: 'Gallery', icon: TbUserHexagon, url: '/admin/gallery' },
   { key: 'categories', label: 'Categories', icon: TbUserHexagon, url: '/admin/categories' },
   { key: 'status', label: 'Status', icon: TbUserHexagon, url: '/admin/status' },
   { key: 'users', label: 'Users', icon: TbUserHexagon, url: '/admin/users' },
