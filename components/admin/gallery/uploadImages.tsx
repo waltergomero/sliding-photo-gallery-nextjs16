@@ -360,9 +360,6 @@ const UploadImages = () => {
       <div className="row justify-content-center">
         <div className="col-12">
           <div className="card">
-            <div className="card-header">
-              <h4 className="mb-0">Upload Images & Videos</h4>
-            </div>
             <div className="card-body">
               {/* Global Errors */}
               {globalErrors.length > 0 && (
@@ -380,45 +377,51 @@ const UploadImages = () => {
               )}
 
               {/* Category Selection */}
-              <div className="mb-4">
-                <label htmlFor="category" className="form-label">
-                  Select Category <span className="text-danger">*</span>
-                </label>
-                <select
-                  id="category"
-                  className={`form-select ${!selectedCategory && selectedMedia.length > 0 ? 'is-invalid' : ''}`}
-                  onChange={handleCategoryChange}
-                  value={selectedCategory?.id || ''}
-                  style={{ maxWidth: '300px' }}
-                >
-                  <option value="">Choose a category...</option>
-                  {categories.map((category) => (
-                    <option key={category.id} value={category.id}>
-                      {category.category_name}
-                    </option>
-                  ))}
-                </select>
+              <div className="mb-3">
+                <div className="row align-items-center">
+                  <div className="col-auto">
+                    <label htmlFor="category" className="form-label mb-0">
+                      Select Category <span className="text-danger">*</span>
+                    </label>
+                  </div>
+                  <div className="col-4">
+                    <select
+                      id="category"
+                      className={`form-select ${!selectedCategory && selectedMedia.length > 0 ? 'is-invalid' : ''}`}
+                      onChange={handleCategoryChange}
+                      value={selectedCategory?.id || ''}
+                      style={{ maxWidth: '300px' }}
+                    >
+                      <option value="">Choose a category...</option>
+                      {categories.map((category) => (
+                        <option key={category.id} value={category.id}>
+                          {category.category_name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
               </div>
 
               {/* File Upload Area */}
-              <div
-                className={`border-2 rounded p-4 text-center mb-4 ${
+              <div className={`rounded p-4 text-center mb-2 ${
                   isDragOver 
                     ? 'border-primary bg-primary bg-opacity-10' 
-                    : 'border-dashed'
+                    : ''
                 } ${isProcessing ? 'bg-light' : ''}`}
                 style={{ 
                   minHeight: '200px',
                   cursor: isProcessing ? 'not-allowed' : 'pointer',
-                  transition: 'all 0.3s ease'
+                  transition: 'all 0.3s ease',
+                  border: isDragOver ? '2px solid var(--bs-primary)' : '2px dashed #dddddd'
                 }}
                 onDragOver={handleDragOver}
                 onDragLeave={handleDragLeave}
                 onDrop={handleDrop}
                 onClick={() => !isProcessing && fileInputRef.current?.click()}
               >
-                <PhotoIcon className="mx-auto mb-3 text-muted" style={{ width: '48px', height: '48px' }} />
-                
+                {/* <PhotoIcon className="mx-auto mb-3 text-muted" style={{ width: '48px', height: '48px' }} />
+                 */}
                 {isProcessing ? (
                   <div>
                     <div className="spinner-border text-primary mb-3" role="status">
@@ -428,9 +431,9 @@ const UploadImages = () => {
                     <p className="text-muted">Please wait while we process your files</p>
                   </div>
                 ) : (
-                  <div>
-                    <h5 className="mb-3">Drop files here or click to browse</h5>
-                    <p className="text-muted mb-3">
+                  <div >
+                    <h5 className="mb-2">Drop files here or click to browse</h5>
+                    <p className="text-muted mb-2">
                       Supports: JPG, PNG, GIF, WebP, HEIC (images) • MP4, WebM, AVI (videos)
                     </p>
                     <p className="text-muted small mb-3">
@@ -546,7 +549,7 @@ const UploadImages = () => {
                             )}
                           </div>
 
-                          <div className="card-body p-3">
+                          <div className="card-body p-1">
                             <textarea
                               className={`form-control form-control-sm ${
                                 media.validationErrors ? 'is-invalid' : ''
@@ -554,7 +557,7 @@ const UploadImages = () => {
                               placeholder="Add caption (optional)"
                               value={media.caption}
                               onChange={(e) => updateCaption(media.id, e.target.value)}
-                              rows={2}
+                              rows={3}
                               disabled={isUploading}
                               style={{ fontSize: '12px', resize: 'vertical' }}
                             />

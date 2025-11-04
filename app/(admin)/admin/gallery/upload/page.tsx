@@ -8,7 +8,7 @@ const UploadPage = async () => {
 
     return (
             <div className="container-fluid">
-                <PageBreadcrumb title="Upload" subtitle="table" />
+                <PageBreadcrumb title="Upload Images & Videos" subtitle="table" />
                  <div className="row justify-content-center">
                     <div className="col-xxl-10">
                         <div className="card">
