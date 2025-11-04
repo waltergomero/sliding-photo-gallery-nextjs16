@@ -3,8 +3,12 @@ import { ChildrenType } from '@/types'
 import { ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { SessionProvider } from "next-auth/react";
+import { requireAuth } from '@/lib/auth-guard'
 
-const Layout = ({ children }: ChildrenType) => {
+const Layout = async ({ children }: ChildrenType) => {
+  // This will redirect to signin if user is not authenticated
+  await requireAuth()
+
   return (
     <>
       <SessionProvider>

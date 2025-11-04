@@ -1,10 +1,14 @@
 import { type Metadata } from 'next'
+import { requireAdmin } from '@/lib/auth-guard'
 
 export const metadata: Metadata = {
   title: 'Dashboard',
 }
 
-const Page = () => {
+const Page = async () => {
+  // This will redirect to signin if user is not authenticated or not an admin
+  await requireAdmin()
+  
   return (
     <div>
       <h1>Admin Dashboard</h1>
