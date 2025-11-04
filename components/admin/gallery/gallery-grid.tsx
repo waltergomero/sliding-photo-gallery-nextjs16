@@ -37,7 +37,7 @@ interface CategoryItem {
 
 
 const GalleryGrid = ({category_name}: GalleryGridProps) => {
-    const [categories, setCategories] = useState<CategoryItem[]>([]);
+  const [categories, setCategories] = useState<CategoryItem[]>([]);
   const [images, setImages] = useState<UserImage[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>(category_name?.toLowerCase() || "all");
   const [lightboxOpen, setLightboxOpen] = useState(false);
@@ -137,9 +137,11 @@ const GalleryGrid = ({category_name}: GalleryGridProps) => {
                   className="img-fluid"
                   src={item.src}
                   alt={item.caption || ''}
-                  width="150"
-                  height="120"
+                  width={item.width}
+                  height={item.height}
                   loading="lazy"
+                  quality={95}
+                  unoptimized={false}
                   style={{
                     width: '100%',
                     height: '100%',

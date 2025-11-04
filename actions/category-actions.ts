@@ -147,6 +147,37 @@ export async function fetchCategoryById(categoryId: string) {
   }
 }
 
+// fetch all categories
+export const fetchCategories = async () => { 
+    try {
+        const _categories = await prisma.category.findMany({
+        orderBy: { category_name: 'asc' },
+        select: {
+            id: true,
+            category_name: true,
+        },
+        });
+        const categories = JSON.parse(JSON.stringify(_categories));
+        return categories;
+    } catch (err) {
+        return({error: err + "Failed to fetch categories!"});
+    }
+}
+
+// fetch all categories
+export const fetchAllCategories = async () => { 
+    try {
+        const _categories = await prisma.category.findMany({
+        orderBy: { category_name: 'asc' },
+        });
+        const categories = JSON.parse(JSON.stringify(_categories));
+        return categories;
+    } catch (err) {
+        return({error: err + "Failed to fetch categories!"});
+    }
+}
+
+
 /**
  * Delete category by ID
  */

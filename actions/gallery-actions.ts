@@ -34,6 +34,7 @@ export const fetchImages = async (category_name = "all") => {
         });
       }
         const images = JSON.parse(JSON.stringify(_images));
+        console.log("Fetched images:", images.length);
         return images;
     } catch (err) {
         return({error: err + "Failed to fetch images!"});
