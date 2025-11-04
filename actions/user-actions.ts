@@ -18,6 +18,7 @@ import bcryptjs from "bcryptjs";
 import prisma from '../lib/prisma';
 import { formatError } from '../lib/utils';
 import { z } from 'zod';
+import { signIn, signOut } from '@/auth';
 
 // Types for better type safety
 interface ActionResult {
@@ -206,7 +207,7 @@ export async function signInWithCredentials(
     }
 
     // TODO: Implement actual authentication (JWT, sessions, etc.)
-    // await signIn('credentials', validatedData);
+    await signIn('credentials', validatedData);
 
     return { 
       success: true, 
@@ -234,7 +235,7 @@ export async function signInWithCredentials(
 export async function signOutUser(): Promise<ActionResult> {
   try {
     // TODO: Implement actual sign out logic
-    // await signOut();
+    await signOut();
     
     return { 
       success: true, 
@@ -296,10 +297,10 @@ export async function signUpUser(
     });
 
     // TODO: Implement auto sign-in after registration
-    // await signIn('credentials', {
-    //   email: validatedData.email,
-    //   password: validatedData.password,
-    // });
+    await signIn('credentials', {
+      email: validatedData.email,
+      password: validatedData.password,
+    });
 
     return { 
       success: true, 
@@ -592,3 +593,4 @@ export async function checkEmailAvailability(
     return handleActionError(error, 'Failed to check email availability');
   }
 }
+
