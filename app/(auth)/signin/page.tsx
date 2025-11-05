@@ -25,4 +25,4 @@ const SignInPage = async (props: SignInPageProps) => {
     )
 }
 
-export default SignInPagey
+export default SignInPage
