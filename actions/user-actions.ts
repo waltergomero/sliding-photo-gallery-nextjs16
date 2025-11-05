@@ -296,11 +296,9 @@ export async function signUpUser(
       },
     });
 
-    // TODO: Implement auto sign-in after registration
-    await signIn('credentials', {
-      email: validatedData.email,
-      password: validatedData.password,
-    });
+    // Redirect to login page after successful registration
+    revalidatePath('/signin');
+    redirect('/signin');
 
     return { 
       success: true, 

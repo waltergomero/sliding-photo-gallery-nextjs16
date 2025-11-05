@@ -14,7 +14,7 @@ const SignInPage = async (props: SignInPageProps) => {
     const session = await auth();
 
         if (session) {
-            return redirect(callbackUrl || '/');
+            return redirect(callbackUrl || '/admin');
         }
 
   
@@ -25,4 +25,4 @@ const SignInPage = async (props: SignInPageProps) => {
     )
 }
 
-export default SignInPage
+export default SignInPagey
