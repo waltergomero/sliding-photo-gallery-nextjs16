@@ -6,9 +6,9 @@ import favicon from '@/assets/images/favicon.ico'
 import { appDescription, appTitle } from '@/helpers'
 import { ChildrenType } from '@/types'
 
-// import 'flatpickr/dist/flatpickr.min.css'
+import 'flatpickr/dist/flatpickr.min.css'
 // import 'jsvectormap/dist/css/jsvectormap.min.css'
-// import 'simplebar-react/dist/simplebar.min.css'
+import 'simplebar-react/dist/simplebar.min.css'
 
 import '@/assets/scss/app.scss'
 
@@ -52,7 +52,7 @@ const RootLayout = ({ children }: ChildrenType) => {
   return (
     //<html lang="en" className={`${roboto.variable} ${openSans.variable}`}>
     <html lang='en' className={`${geistSans.variable} ${geistMono.variable}`}>
-      <body>
+      <body >
         <AppWrapper>{children}</AppWrapper>
       </body>
     </html>

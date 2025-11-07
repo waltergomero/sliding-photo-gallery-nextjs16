@@ -7,11 +7,11 @@ const Footer = () => {
       <Container fluid>
         <Row>
           <Col md={6} className="text-center text-md-start">
-            © 2014 - {currentYear} {appName} By <span className="fw-semibold">{author}</span>
+            © 2025 - {currentYear} {appName}
           </Col>
           <Col md={6}>
             <div className="text-md-end d-none d-md-block">
-              10GB of <span className="fw-bold">250GB</span> Free.
+              developed by <span className="fw-semibold">{author}</span>
             </div>
           </Col>
         </Row>
