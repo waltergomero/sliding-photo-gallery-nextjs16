@@ -179,7 +179,8 @@ export async function fetchOneImagePerCategory() {
     const images = JSON.parse(JSON.stringify(_images));
     return images;
   } catch (err) {
-    return({error: "Failed to fetch one image per category! " + err});
+    console.error("Failed to fetch one image per category:", err);
+    return [];
   }
 }
 
@@ -205,7 +206,8 @@ export async function fetchOneImagePerCategoryLimited() {
     const images = JSON.parse(JSON.stringify(_images));
     return images;
   } catch (err) {
-    return({error: "Failed to fetch one image per category! " + err});
+    console.error("Failed to fetch one image per category (limited):", err);
+    return [];
   }
 }
 
