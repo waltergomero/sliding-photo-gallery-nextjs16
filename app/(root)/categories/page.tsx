@@ -20,10 +20,10 @@ const GalleryCategoryPage = async () => {
   return (
     <Fragment>
         <div className="page-header container-fluid p-0">
-		    <div className="row m-0 align-items-center justify-content-center bg-dark" style={{ backgroundColor: '#212529' }}>
+		    <div className="row m-0 align-items-center justify-content-center bg-dark p-3" style={{ backgroundColor: '#212529' }}>
 		    <img src="/images/header.png" alt="Header Placeholder"/>
 		    <h1 className="h1 position-absolute single-category-title">Category<small>Collections</small></h1>
-		</div>
+		    </div>
 	  </div>
     <div className='pb-1'>
         <div className="container gallery-wrap mt-sm-5">

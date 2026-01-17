@@ -26,12 +26,6 @@ export default function GalleryPageScripts() {
       // Make sure $ is globally available
       if (typeof window !== 'undefined' && window.jQuery) {
         window.$ = window.jQuery;
-        
-        // Debug logging
-        console.log('Gallery debug script executing');
-        console.log('jQuery available:', typeof window.jQuery !== 'undefined');
-        console.log('$ available:', typeof window.$ !== 'undefined');
-        console.log('Fancybox available:', typeof window.jQuery.fancybox !== 'undefined');
       }
     }
   }, [jqueryLoaded, fancyboxLoaded, customLoaded]);
