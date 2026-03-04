@@ -12,9 +12,9 @@ const HomePage = async () => {
     <Fragment>
       <div>
           <div style={{ textAlign: 'center', left: 0, background: 'black', padding: '20px' }}>
-                <h1 className="display-6 font-weight-bold" style={{ color: 'red', fontWeight: 600 }}>WELCOME TO THE</h1>
-                <h1 className="display-3" style={{ color: 'white', fontWeight: 600, textTransform: 'uppercase' }}>GRAND CHIMU</h1>
-                <h1 className="display-6 font-weight-bold" style={{ color: 'red', fontWeight: 600  }}>PHOTO GALLERY </h1>
+                {/* <h1 className="display-6 font-weight-bold" style={{ color: 'red', fontWeight: 600 }}>WELCOME TO THE</h1> */}
+                <h1 className="display-3" style={{ color: 'white', fontWeight: 600, textTransform: 'uppercase' }}>Memories in Pixels</h1>
+                <h1 className="display-6 font-weight-bold" style={{ color: 'red', fontWeight: 600  }}>Stories Through the Lens</h1>
           </div>
           <div className="home-header">
               <div className="slider slider-for">                                                               
