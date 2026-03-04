@@ -1,0 +1,20 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="WG logo">
+  <defs>
+    <linearGradient id="bg" x1="64" y1="64" x2="448" y2="448" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#1F2937"/>
+      <stop offset="1" stop-color="#111827"/>
+    </linearGradient>
+    <linearGradient id="stroke" x1="120" y1="120" x2="392" y2="392" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#60A5FA"/>
+      <stop offset="1" stop-color="#34D399"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="48" y="48" width="416" height="416" rx="96" fill="url(#bg)"/>
+
+  <!-- W -->
+  <path d="M112 156L152 356H196L236 220L276 356H320L360 156H314L296 286L258 156H214L176 286L158 156H112Z" fill="url(#stroke)"/>
+
+  <!-- G -->
+  <path d="M332 292H392C391 347 353 384 300 384C241 384 200 339 200 280C200 221 241 176 300 176C339 176 370 194 387 224L347 247C337 230 320 220 300 220C267 220 244 245 244 280C244 315 267 340 300 340C324 340 341 328 347 308H332V292Z" fill="#F9FAFB"/>
+</svg>

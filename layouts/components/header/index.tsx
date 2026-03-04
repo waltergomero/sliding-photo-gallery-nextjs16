@@ -32,22 +32,53 @@ export default function Header() {
   return (
     <>
       <header>
-        <Navbar expand="lg" className={`py-2 sticky-top ${scrollY > 100 && 'top-scroll-up top-fixed'}`} id="landing-navbar">
+        <Navbar expand="lg" className={`py-0 sticky-top ${scrollY > 100 && 'top-scroll-up top-fixed'}`} id="landing-navbar">
           <Container>
-            <NavbarBrand className="auth-brand mb-0">
+            {/* <NavbarBrand className="auth-brand mb-0">
               <AppLogo />
-            </NavbarBrand>
+            </NavbarBrand> */}
 
             <NavbarToggle aria-controls="navbarSupportedContent" onClick={() => setIsCollapsed(!isCollapsed)} />
             <NavbarCollapse in={!isCollapsed} id="navbarSupportedContent">
               <Nav className="fw-medium gap-2 fs-sm mx-auto mt-2 mt-lg-0">
-                {navItems.map((item, idx) => (
+                {/* {navItems.map((item, idx) => (
                   <li className="nav-item" key={idx}>
                     <NavLink className="nav-link" href={item.path}>
                       {item.name}
                     </NavLink>
                   </li>
-                ))}
+                ))} */}
+                <li className="nav-item">
+                    <NavLink className="nav-link py-3" href="/categories">
+                      Categories
+                    </NavLink>
+                </li>
+                <li className="nav-item">
+                    <NavLink className="nav-link py-3" href="/videos">
+                      Videos
+                    </NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink className="nav-link d-flex flex-column align-items-center text-center" href="/">
+                   <h3 className="mb-0 fs-4 fw-bold text-uppercase font-white">Walter Gomero</h3>
+                   <h4 className="mb-0">- Photo Gallery -</h4>
+                   </NavLink>
+                </li>
+                <li className="nav-item">
+                    <NavLink className="nav-link py-3" href="/collection/1">
+                      Landscape
+                    </NavLink>
+                </li>
+                <li className="nav-item">
+                    <NavLink className="nav-link py-3" href="/collection/2">
+                      Portrait
+                    </NavLink>
+                </li>
+                <li className="nav-item">
+                    <NavLink className="nav-link py-3" href="/collection/3">
+                      B&W
+                    </NavLink>
+                </li>
               </Nav>
               <div className="d-flex align-items-center">
                 <Button variant="link" className="btn-icon fw-semibold text-body me-2" onClick={toggleTheme}>
